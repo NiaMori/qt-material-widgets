@@ -47,6 +47,12 @@ namespace Material
         LetterAvatar
     };
 
+    enum ListItemType {
+        ImageListItem,
+        IconListItem,
+        LetterListItem
+    };
+
     enum Color {
         red50,
         red100,

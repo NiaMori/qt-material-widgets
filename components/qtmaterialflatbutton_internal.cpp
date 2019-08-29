@@ -141,7 +141,6 @@ void QtMaterialFlatButtonStateMachine::setHaloScaleFactor(qreal factor)
 
 void QtMaterialFlatButtonStateMachine::startAnimations()
 {
-    m_haloAnimation->start();
     start();
 }
 
