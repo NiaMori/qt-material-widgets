@@ -28,6 +28,7 @@ public:
     bool                          autoRaise;
     bool                          closed;
     bool                          overlay;
+    Qt::AnchorPoint               anchor;
 };
 
 #endif // DRAWER_P_H

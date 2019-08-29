@@ -135,14 +135,24 @@ void QtMaterialDrawerWidget::setOffset(int offset)
 
     QWidget *widget = parentWidget();
     if (widget) {
-        setGeometry(widget->rect().translated(offset, 0));
+        if (m_anchor == Qt::AnchorLeft)
+            setGeometry(widget->rect().translated(offset, 0));
+        else
+            setGeometry(widget->rect().translated(widget->width()-width()-offset, 0));
     }
+    update();
+}
+
+void QtMaterialDrawerWidget::setAnchor(Qt::AnchorPoint anchor)
+{
+    m_anchor = anchor;
     update();
 }
 
 void QtMaterialDrawerWidget::paintEvent(QPaintEvent *event)
 {
     Q_UNUSED(event)
+    QWidget *widget = parentWidget();
 
     QPainter painter(this);
 
@@ -152,18 +162,35 @@ void QtMaterialDrawerWidget::paintEvent(QPaintEvent *event)
     painter.setBrush(brush);
     painter.setPen(Qt::NoPen);
 
-    painter.drawRect(rect().adjusted(0, 0, -16, 0));
 
     QLinearGradient gradient(QPointF(width()-16, 0), QPointF(width(), 0));
+    if (m_anchor == Qt::AnchorLeft)
+    {
+        painter.drawRect(0, 0, width()-16, widget->height());
+    }
+    else
+    {
+        painter.drawRect(widget->rect().adjusted(16, 0, 0, 0));
+
+        gradient.setStart(QPointF(16, 0));
+        gradient.setFinalStop(QPointF(0, 0));
+    }
     gradient.setColorAt(0, QColor(0, 0, 0, 80));
     gradient.setColorAt(0.5, QColor(0, 0, 0, 20));
     gradient.setColorAt(1, QColor(0, 0, 0, 0));
     painter.setBrush(QBrush(gradient));
 
-    painter.drawRect(width()-16, 0, 16, height());
+    if (m_anchor == Qt::AnchorLeft)
+        painter.drawRect(width()-16, 0, width(), widget->height());
+    else
+        painter.drawRect(widget->rect().adjusted(0, 0, -widget->width()+16, 0));
 }
 
 QRect QtMaterialDrawerWidget::overlayGeometry() const
 {
-    return QtMaterialOverlayWidget::overlayGeometry().translated(m_offset, 0);
+    QWidget *widget = parentWidget();
+    if (m_anchor == Qt::AnchorLeft)
+        return rect().translated(m_offset, 0);
+    else
+        return rect().translated(widget->width()-width()-m_offset, 0);
 }

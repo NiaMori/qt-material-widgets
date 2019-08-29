@@ -29,6 +29,9 @@ public:
     void setOverlayMode(bool value);
     bool overlayMode() const;
 
+    void setAnchor(Qt::AnchorPoint anchor);
+    Qt::AnchorPoint anchor() const;
+
 public slots:
     void openDrawer();
     void closeDrawer();

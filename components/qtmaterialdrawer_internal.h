@@ -51,6 +51,7 @@ class QtMaterialDrawerWidget : public QtMaterialOverlayWidget
     Q_OBJECT
 
     Q_PROPERTY(int offset WRITE setOffset READ offset)
+    Q_PROPERTY(Qt::AnchorPoint anchor WRITE setAnchor READ anchor)
 
 public:
     explicit QtMaterialDrawerWidget(QWidget *parent = 0);
@@ -59,6 +60,9 @@ public:
     void setOffset(int offset);
     inline int offset() const;
 
+    void setAnchor(Qt::AnchorPoint anchor);
+    inline Qt::AnchorPoint anchor() const;
+
 protected:
     void paintEvent(QPaintEvent *event) Q_DECL_OVERRIDE;
 
@@ -66,11 +70,17 @@ protected:
 
 private:
     int  m_offset;
+    Qt::AnchorPoint  m_anchor;
 };
 
 inline int QtMaterialDrawerWidget::offset() const
 {
     return m_offset;
+}
+
+inline Qt::AnchorPoint QtMaterialDrawerWidget::anchor() const
+{
+    return m_anchor;
 }
 
 #endif // DRAWER_INTERNAL_H

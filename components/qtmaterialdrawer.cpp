@@ -45,6 +45,7 @@ void QtMaterialDrawerPrivate::init()
     autoRaise    = true;
     closed       = true;
     overlay      = false;
+    anchor       = Qt::AnchorLeft;
 
     QVBoxLayout *layout = new QVBoxLayout;
     layout->addWidget(window);
@@ -53,6 +54,7 @@ void QtMaterialDrawerPrivate::init()
     widget->setFixedWidth(width+16);
 
     widget->setParent(q);
+    widget->setAnchor(anchor);
 
     stateMachine->start();
     QCoreApplication::processEvents();
@@ -101,6 +103,13 @@ QLayout *QtMaterialDrawer::drawerLayout() const
     Q_D(const QtMaterialDrawer);
 
     return d->window->layout();
+}
+
+void QtMaterialDrawer::setAnchor(Qt::AnchorPoint anchor)
+{
+    Q_D(QtMaterialDrawer);
+    d->widget->setAnchor(anchor);
+    update();
 }
 
 void QtMaterialDrawer::setClickOutsideToClose(bool state)
@@ -208,9 +217,14 @@ bool QtMaterialDrawer::eventFilter(QObject *obj, QEvent *event)
     case QEvent::Move:
     case QEvent::Resize: {
         QLayout *lw = d->widget->layout();
-        if (lw && 16 != lw->contentsMargins().right()) {
-            lw->setContentsMargins(0, 0, 16, 0);
+        if (lw)
+        {
+            if (d->widget->anchor() == Qt::AnchorLeft)
+                lw->setContentsMargins(0, 0, 16, 0);
+            else
+                lw->setContentsMargins(16, 0, 0, 0);
         }
+        d->widget->setGeometry(rect());
         break;
     }
     default:
