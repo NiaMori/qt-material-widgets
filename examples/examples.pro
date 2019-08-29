@@ -10,6 +10,7 @@ SOURCES = mainwindow.cpp \
     raisedbuttonsettingseditor.cpp \
     flatbuttonsettingseditor.cpp \
     iconbuttonsettingseditor.cpp \
+    listitemsettingseditor.cpp \
     progresssettingseditor.cpp \
     circularprogresssettingseditor.cpp \
     slidersettingseditor.cpp \
@@ -18,6 +19,7 @@ SOURCES = mainwindow.cpp \
     textfieldsettingseditor.cpp \
     tabssettingseditor.cpp \
     snackbarsettingseditor.cpp \
+    dividersettingseditor.cpp \
     dialogsettingseditor.cpp \
     drawersettingseditor.cpp \
     scrollbarsettingseditor.cpp \
@@ -32,6 +34,7 @@ HEADERS = mainwindow.h \
     raisedbuttonsettingseditor.h \
     flatbuttonsettingseditor.h \
     iconbuttonsettingseditor.h \
+    listitemsettingseditor.h \
     progresssettingseditor.h \
     circularprogresssettingseditor.h \
     slidersettingseditor.h \
@@ -40,16 +43,35 @@ HEADERS = mainwindow.h \
     textfieldsettingseditor.h \
     tabssettingseditor.h \
     snackbarsettingseditor.h \
+    dividersettingseditor.h \
     dialogsettingseditor.h \
     drawersettingseditor.h \
     scrollbarsettingseditor.h \
     appbarsettingseditor.h \
     autocompletesettingseditor.h \
     menusettingseditor.h
+
+
+win32 {
+LIBS += $$top_builddir/components/$(OBJECTS_DIR)/components.lib
+PRE_TARGETDEPS += $$top_builddir/components/$(OBJECTS_DIR)/components.lib
+}
+win64 {
+}
+macx {
 LIBS += $$top_builddir/components/$(OBJECTS_DIR)/libcomponents.a
+PRE_TARGETDEPS += $$top_builddir/components/$(OBJECTS_DIR)/libcomponents.a
+}
+unix:!macx{
+LIBS += $$top_builddir/components/$(OBJECTS_DIR)/libcomponents.a
+PRE_TARGETDEPS += $$top_builddir/components/$(OBJECTS_DIR)/libcomponents.a
+}
+
+
+
 INCLUDEPATH += $$top_srcdir/components/
 TARGET = examples-exe
-PRE_TARGETDEPS += $$top_builddir/components/$(OBJECTS_DIR)/libcomponents.a
+
 
 RESOURCES += \
     examples.qrc
@@ -61,10 +83,12 @@ FORMS += \
     fabsettingsform.ui \
     flatbuttonsettingsform.ui \
     iconbuttonsettingsform.ui \
+    listitemsettingsform.ui \
     progresssettingsform.ui \
     circularprogresssettingsform.ui \
     slidersettingsform.ui \
     snackbarsettingsform.ui \
+    dividersettingsform.ui \
     radiobuttonsettingsform.ui \
     togglesettingsform.ui \
     textfieldsettingsform.ui \ 

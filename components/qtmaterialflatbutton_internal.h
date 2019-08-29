@@ -101,3 +101,4 @@ inline qreal QtMaterialFlatButtonStateMachine::haloScaleFactor() const
 }
 
 #endif // QTMATERIALFLATBUTTON_INTERNAL_H
+

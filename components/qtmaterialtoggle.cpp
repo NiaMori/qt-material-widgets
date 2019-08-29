@@ -268,8 +268,8 @@ QSize QtMaterialToggle::sizeHint() const
     Q_D(const QtMaterialToggle);
 
     return Qt::Horizontal == d->orientation
-        ? QSize(64, 48)
-        : QSize(48, 64);
+        ? QSize(42, 24)
+        : QSize(24, 42);
 }
 
 bool QtMaterialToggle::event(QEvent *event)

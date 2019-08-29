@@ -38,13 +38,13 @@ void QtMaterialToggleRippleOverlay::addToggleRipple()
 
     if (Qt::Horizontal == m_toggle->orientation()) {
         t = m_toggle->height()/2;
-        w = m_thumb->height()/2+10;
+        w = m_thumb->height()/2+1;
     } else {
         t = m_toggle->width()/2;
-        w = m_thumb->width()/2+10;
+        w = m_thumb->width()/2+1;
     }
 
-    QtMaterialRipple *ripple = new QtMaterialRipple(QPoint(10+t, 20+t));
+    QtMaterialRipple *ripple = new QtMaterialRipple(QPoint(10+t, 10+t));
     ripple->setColor(m_track->trackColor());
     ripple->setRadiusEndValue(w);
     ripple->setOpacityStartValue(0.8);
@@ -70,9 +70,9 @@ QRect QtMaterialToggleRippleOverlay::overlayGeometry() const
 {
     const qreal offset = m_thumb->offset();
     if (Qt::Horizontal == m_toggle->orientation()) {
-        return m_toggle->geometry().adjusted(-10+offset, -20, 10+offset, 20);
+        return m_toggle->geometry().adjusted(-10+offset, -10, 10+offset, 10);
     } else {
-        return m_toggle->geometry().adjusted(-10, -20+offset, 10, 20+offset);
+        return m_toggle->geometry().adjusted(-10, -10+offset, 10, 10+offset);
     }
 }
 
@@ -118,7 +118,6 @@ bool QtMaterialToggleThumb::eventFilter(QObject *obj, QEvent *event)
 
     if (QEvent::Resize == type || QEvent::Move == type)
     {
-        setGeometry(m_toggle->rect().adjusted(8, 8, -8, -8));
         updateOffset();
     }
     return QWidget::eventFilter(obj, event);
@@ -142,11 +141,11 @@ void QtMaterialToggleThumb::paintEvent(QPaintEvent *event)
     QRectF r;
 
     if (Qt::Horizontal == m_toggle->orientation()) {
-        s = height()-10;
-        r = QRectF(5+m_offset, 5, s, s);
+        s = 16;
+        r = QRectF(4+m_offset, 4, s, s);
     } else {
-        s = width()-10;
-        r = QRectF(5, 5+m_offset, s, s);
+        s = 16;
+        r = QRectF(4, 4+m_offset, s, s);
     }
 
     painter.drawEllipse(r);
@@ -160,9 +159,7 @@ void QtMaterialToggleThumb::paintEvent(QPaintEvent *event)
 
 void QtMaterialToggleThumb::updateOffset()
 {
-    const QSize s(Qt::Horizontal == m_toggle->orientation()
-        ? size() : size().transposed());
-    m_offset = m_shift*static_cast<qreal>(s.width()-s.height());
+    m_offset = m_shift*static_cast<qreal>(19);
     update();
 }
 
@@ -221,11 +218,11 @@ void QtMaterialToggleTrack::paintEvent(QPaintEvent *event)
 
     if (Qt::Horizontal == m_toggle->orientation()) {
         const int h = height()/2;
-        const QRect r(0, h/2, width(), h);
-        painter.drawRoundedRect(r.adjusted(14, 4, -14, -4), h/2-4, h/2-4);
+        const QRect r(0, h/2, width(), 10);
+        painter.drawRoundedRect(r.adjusted(11, 1, -11, 2), h/2-1, h/2-1);
     } else {
         const int w = width()/2;
-        const QRect r(w/2, 0, w, height());
-        painter.drawRoundedRect(r.adjusted(4, 14, -4, -14), w/2-4, w/2-4);
+        const QRect r(w/2, 0, 10, height());
+        painter.drawRoundedRect(r.adjusted(1, 11, -2, -11), w/2-1, w/2-1);
     }
 }

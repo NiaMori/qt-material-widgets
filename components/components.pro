@@ -1,7 +1,9 @@
 TEMPLATE = lib
 CONFIG += staticlib
 SOURCES = \
+    qtmaterialdivider.cpp \
     qtmaterialavatar.cpp \
+    qtmateriallistitem.cpp \
     lib/qtmaterialstyle.cpp \
     lib/qtmaterialtheme.cpp \
     qtmaterialbadge.cpp \
@@ -49,8 +51,12 @@ SOURCES = \
     qtmateriallist.cpp \
     qtmateriallistitem.cpp
 HEADERS = \
+    qtmaterialdivider_p.h \
+    qtmaterialdivider.h \
     qtmaterialavatar_p.h \
     qtmaterialavatar.h \
+    qtmateriallistitem.h \
+    qtmateriallistitem.h \
     lib/qtmaterialstyle_p.h \
     lib/qtmaterialstyle.h \
     lib/qtmaterialtheme_p.h \
