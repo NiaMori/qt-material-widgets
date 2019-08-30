@@ -189,7 +189,7 @@ bool QtMaterialDrawer::event(QEvent *event)
     case QEvent::Move:
     case QEvent::Resize:
         if (!d->overlay) {
-            setMask(QRegion(d->widget->rect()));
+            setMask(QRegion(d->widget->geometry()));
         }
         break;
     default:
