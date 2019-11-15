@@ -49,7 +49,9 @@ SOURCES = \
     qtmaterialmenu.cpp \
     qtmaterialmenu_internal.cpp \
     qtmateriallist.cpp \
-    qtmateriallistitem.cpp
+    qtmateriallistitem.cpp \
+    qtmaterialtooltabs_internal.cpp \
+    qtmaterialtooltabs.cpp
 HEADERS = \
     qtmaterialdivider_p.h \
     qtmaterialdivider.h \
@@ -131,6 +133,9 @@ HEADERS = \
     qtmateriallist.h \
     qtmateriallist_p.h \
     qtmateriallistitem.h \
-    qtmateriallistitem_p.h
+    qtmateriallistitem_p.h \
+    qtmaterialtooltabs_internal.h \
+    qtmaterialtooltabs_p.h \
+    qtmaterialtooltabs.h
 RESOURCES += \
     resources.qrc

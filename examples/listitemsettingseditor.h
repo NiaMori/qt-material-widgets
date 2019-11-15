@@ -2,7 +2,7 @@
 #define LISTITEMSETTINGSEDITOR_H
 
 #include <QWidget>
-#include "ui_LISTITEMsettingsform.h"
+#include "ui_listitemsettingsform.h"
 
 class QtMaterialListItem;
 
