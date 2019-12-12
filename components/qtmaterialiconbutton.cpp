@@ -89,6 +89,20 @@ bool QtMaterialIconButton::useThemeColors() const
     return d->useThemeColors;
 }
 
+void QtMaterialIconButton::setRole(Material::Role role)
+{
+    Q_D(QtMaterialIconButton);
+
+    d->role = role;
+}
+
+Material::Role QtMaterialIconButton::role() const
+{
+    Q_D(const QtMaterialIconButton);
+
+    return d->role;
+}
+
 void QtMaterialIconButton::setColor(const QColor &color)
 {
     Q_D(QtMaterialIconButton);
@@ -127,6 +141,35 @@ QColor QtMaterialIconButton::disabledColor() const
         return QtMaterialStyle::instance().themeColor("disabled");
     }
     return d->disabledColor;
+}
+
+void QtMaterialIconButton::setCheckedColor(const QColor &color)
+{
+    Q_D(QtMaterialIconButton);
+
+    d->checkedColor = color;
+
+    MATERIAL_DISABLE_THEME_COLORS
+    update();
+}
+
+QColor QtMaterialIconButton::checkedColor() const
+{
+    Q_D(const QtMaterialIconButton);
+
+    if (d->useThemeColors || !d->checkedColor.isValid()) {
+        switch (d->role)
+        {
+        case Material::Primary:
+            return QtMaterialStyle::instance().themeColor("primary1");
+        case Material::Secondary:
+            return QtMaterialStyle::instance().themeColor("accent1");
+        case Material::Default:
+        default:
+            return QtMaterialStyle::instance().themeColor("text");
+        }
+    }
+    return d->checkedColor;
 }
 
 QtMaterialIconButton::QtMaterialIconButton(QtMaterialIconButtonPrivate &d, QWidget *parent)
@@ -203,7 +246,9 @@ void QtMaterialIconButton::paintEvent(QPaintEvent *event)
     QPixmap pixmap = icon().pixmap(iconSize());
     QPainter icon(&pixmap);
     icon.setCompositionMode(QPainter::CompositionMode_SourceIn);
-    icon.fillRect(pixmap.rect(), isEnabled() ? color() : disabledColor());
+    QColor activeColor = (this->isChecked()) ? checkedColor() : color();
+
+    icon.fillRect(pixmap.rect(), isEnabled() ? activeColor : disabledColor());
 
     QRect r(rect());
     const qreal w = pixmap.width();

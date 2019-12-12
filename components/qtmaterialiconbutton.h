@@ -2,6 +2,7 @@
 #define QTMATERIALICONBUTTON_H
 
 #include <QtWidgets/QAbstractButton>
+#include "lib/qtmaterialtheme.h"
 
 class QtMaterialIconButtonPrivate;
 
@@ -18,11 +19,17 @@ public:
     void setUseThemeColors(bool value);
     bool useThemeColors() const;
 
+    void setRole(Material::Role role);
+    Material::Role role() const;
+
     void setColor(const QColor &color);
     QColor color() const;
 
     void setDisabledColor(const QColor &color);
     QColor disabledColor() const;
+
+    void setCheckedColor(const QColor &color);
+    QColor checkedColor() const;
 
 protected:
     QtMaterialIconButton(QtMaterialIconButtonPrivate &d, QWidget *parent = 0);

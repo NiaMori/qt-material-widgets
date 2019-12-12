@@ -2,6 +2,8 @@
 #define QTMATERIALICONBUTTON_P_H
 
 #include <QtGlobal>
+#include <QColor>
+#include "lib/qtmaterialtheme.h"
 
 class QtMaterialIconButton;
 class QtMaterialRippleOverlay;
@@ -21,8 +23,10 @@ public:
 
     QtMaterialIconButton    *const q_ptr;
     QtMaterialRippleOverlay *rippleOverlay;
+    Material::Role           role;
     QColor                   color;
     QColor                   disabledColor;
+    QColor                   checkedColor;
     bool                     useThemeColors;
 };
 
