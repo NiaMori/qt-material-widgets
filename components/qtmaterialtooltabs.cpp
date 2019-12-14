@@ -22,7 +22,6 @@ void QtMaterialToolTabsPrivate::init()
 {
     Q_Q(QtMaterialToolTabs);
 
-    inkBar         = new QtMaterialToolTabsInkBar(q);
     tabLayout      = new QVBoxLayout;
     rippleStyle    = Material::CenteredRipple;
     tab            = -1;
@@ -104,7 +103,6 @@ void QtMaterialToolTabs::setInkColor(const QColor &color)
     d->inkColor = color;
 
     MATERIAL_DISABLE_THEME_COLORS
-    d->inkBar->update();
     update();
 }
 
@@ -177,7 +175,6 @@ void QtMaterialToolTabs::setCurrentTab(int index)
     setTabActive(d->tab, false);
     d->tab = index;
     setTabActive(index, true);
-    d->inkBar->animate();
 
     emit currentChanged(index);
 }

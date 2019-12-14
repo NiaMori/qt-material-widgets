@@ -8,47 +8,6 @@
 class QPropertyAnimation;
 class QtMaterialToolTabs;
 
-class QtMaterialToolTabsInkBar : public QtMaterialOverlayWidget
-{
-    Q_OBJECT
-
-    Q_PROPERTY(qreal tweenValue WRITE setTweenValue READ tweenValue)
-
-public:
-    QtMaterialToolTabsInkBar(QtMaterialToolTabs *parent);
-    ~QtMaterialToolTabsInkBar();
-
-    inline void setTweenValue(qreal value);
-    inline qreal tweenValue() const;
-
-    void refreshGeometry();
-    void animate();
-
-protected:
-    bool eventFilter(QObject *obj, QEvent *event)  Q_DECL_OVERRIDE;
-    void paintEvent(QPaintEvent *event) Q_DECL_OVERRIDE;
-
-private:
-    Q_DISABLE_COPY(QtMaterialToolTabsInkBar)
-
-    QtMaterialToolTabs     *const m_tabs;
-    QPropertyAnimation *const m_animation;
-    QRect                     m_geometry;
-    QRect                     m_previousGeometry;
-    qreal                     m_tween;
-};
-
-inline void QtMaterialToolTabsInkBar::setTweenValue(qreal value)
-{
-    m_tween = value;
-    refreshGeometry();
-}
-
-inline qreal QtMaterialToolTabsInkBar::tweenValue() const
-{
-    return m_tween;
-}
-
 class QtMaterialToolTab : public QWidget
 {
     Q_OBJECT
