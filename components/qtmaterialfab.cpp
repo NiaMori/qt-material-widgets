@@ -15,7 +15,7 @@
  *  \internal
  */
 QtMaterialFloatingActionButtonPrivate::QtMaterialFloatingActionButtonPrivate(QtMaterialFloatingActionButton *q)
-    : QtMaterialRaisedButtonPrivate(q)
+    : QtMaterialContainedButtonPrivate(q)
 {
 }
 
@@ -105,7 +105,7 @@ void QtMaterialFloatingActionButtonPrivate::setupProperties()
  */
 
 QtMaterialFloatingActionButton::QtMaterialFloatingActionButton(const QIcon &icon, QWidget *parent)
-    : QtMaterialRaisedButton(*new QtMaterialFloatingActionButtonPrivate(this), parent)
+    : QtMaterialContainedButton(*new QtMaterialFloatingActionButtonPrivate(this), parent)
 {
     d_func()->init();
 
@@ -235,7 +235,7 @@ bool QtMaterialFloatingActionButton::event(QEvent *event)
     Q_D(QtMaterialFloatingActionButton);
 
     if (!parent()) {
-        return QtMaterialRaisedButton::event(event);
+        return QtMaterialContainedButton::event(event);
     }
     switch (event->type())
     {
@@ -253,7 +253,7 @@ bool QtMaterialFloatingActionButton::event(QEvent *event)
     default:
         break;
     }
-    return QtMaterialRaisedButton::event(event);
+    return QtMaterialContainedButton::event(event);
 }
 
 /*!
@@ -269,7 +269,7 @@ bool QtMaterialFloatingActionButton::eventFilter(QObject *obj, QEvent *event)
         setGeometry(d->fabGeometry());
     }
 
-    return QtMaterialRaisedButton::eventFilter(obj, event);
+    return QtMaterialContainedButton::eventFilter(obj, event);
 }
 
 /*!

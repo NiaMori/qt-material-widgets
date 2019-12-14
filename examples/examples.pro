@@ -7,8 +7,9 @@ SOURCES = mainwindow.cpp \
     badgesettingseditor.cpp \
     checkboxsettingseditor.cpp \
     fabsettingseditor.cpp \
-    raisedbuttonsettingseditor.cpp \
-    flatbuttonsettingseditor.cpp \
+    containedbuttonsettingseditor.cpp \
+    outilinedbuttonsettingseditor.cxx \
+    textbuttonsettingseditor.cpp \
     iconbuttonsettingseditor.cpp \
     listitemsettingseditor.cpp \
     progresssettingseditor.cpp \
@@ -31,8 +32,9 @@ HEADERS = mainwindow.h \
     badgesettingseditor.h \
     checkboxsettingseditor.h \
     fabsettingseditor.h \
-    raisedbuttonsettingseditor.h \
-    flatbuttonsettingseditor.h \
+    containedbuttonsettingseditor.h \
+    outilinedbuttonsettingseditor.h \
+    textbuttonsettingseditor.h \
     iconbuttonsettingseditor.h \
     listitemsettingseditor.h \
     progresssettingseditor.h \
@@ -81,7 +83,7 @@ FORMS += \
     badgesettingsform.ui \
     checkboxsettingsform.ui \
     fabsettingsform.ui \
-    flatbuttonsettingsform.ui \
+    textbuttonsettingsform.ui \
     iconbuttonsettingsform.ui \
     listitemsettingsform.ui \
     progresssettingsform.ui \

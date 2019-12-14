@@ -2,7 +2,7 @@
 #include <QVBoxLayout>
 #include <QColorDialog>
 #include <qtmaterialdialog.h>
-#include <qtmaterialflatbutton.h>
+#include <qtmaterialtextbutton.h>
 
 DialogSettingsEditor::DialogSettingsEditor(QWidget *parent)
     : QWidget(parent),
@@ -32,7 +32,7 @@ DialogSettingsEditor::DialogSettingsEditor(QWidget *parent)
     QVBoxLayout *dialogWidgetLayout = new QVBoxLayout;
     dialogWidget->setLayout(dialogWidgetLayout);
 
-    QtMaterialFlatButton *closeButton = new QtMaterialFlatButton("Close");
+    QtMaterialTextButton *closeButton = new QtMaterialTextButton("Close");
     dialogWidgetLayout->addWidget(closeButton);
     dialogWidgetLayout->setAlignment(closeButton, Qt::AlignBottom | Qt::AlignCenter);
 

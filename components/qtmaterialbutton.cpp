@@ -1,25 +1,28 @@
-#include "qtmaterialflatbutton.h"
-#include "qtmaterialflatbutton_p.h"
+#include "qtmaterialbutton.h"
+#include "qtmaterialbutton_p.h"
+
+#include "lib/qtmaterialrippleoverlay.h"
+#include "lib/qtmaterialripple.h"
+#include "lib/qtmaterialstyle.h"
+#include "qtmaterialbutton_internal.h"
+
 #include <QPainter>
 #include <QMouseEvent>
 #include <QResizeEvent>
 #include <QBitmap>
 #include <QPainterPath>
 #include <QIcon>
-#include "lib/qtmaterialrippleoverlay.h"
-#include "lib/qtmaterialripple.h"
-#include "lib/qtmaterialstyle.h"
-#include "qtmaterialflatbutton_internal.h"
+#include <QtWidgets/QApplication>
 
 /*!
- *  \class QtMaterialFlatButtonPrivate
+ *  \class QtMaterialButtonPrivate
  *  \internal
  */
 
 /*!
  *  \internal
  */
-QtMaterialFlatButtonPrivate::QtMaterialFlatButtonPrivate(QtMaterialFlatButton *q)
+QtMaterialButtonPrivate::QtMaterialButtonPrivate(QtMaterialButton *q)
     : q_ptr(q)
 {
 }
@@ -27,19 +30,17 @@ QtMaterialFlatButtonPrivate::QtMaterialFlatButtonPrivate(QtMaterialFlatButton *q
 /*!
  *  \internal
  */
-QtMaterialFlatButtonPrivate::~QtMaterialFlatButtonPrivate()
-{
-}
+QtMaterialButtonPrivate::~QtMaterialButtonPrivate() = default;
 
 /*!
  *  \internal
  */
-void QtMaterialFlatButtonPrivate::init()
+void QtMaterialButtonPrivate::init()
 {
-    Q_Q(QtMaterialFlatButton);
+    Q_Q(QtMaterialButton);
 
     rippleOverlay        = new QtMaterialRippleOverlay(q);
-    stateMachine         = new QtMaterialFlatButtonStateMachine(q);
+    stateMachine         = new QtMaterialButtonStateMachine(q);
     role                 = Material::Default;
     rippleStyle          = Material::PositionedRipple;
     iconPlacement        = Material::LeftIcon;
@@ -71,47 +72,41 @@ void QtMaterialFlatButtonPrivate::init()
     stateMachine->startAnimations();
 }
 
-/*!
- *  \class QtMaterialFlatButton
- */
-
-QtMaterialFlatButton::QtMaterialFlatButton(QWidget *parent, Material::ButtonPreset preset)
+QtMaterialButton::QtMaterialButton(QWidget* parent, Material::ButtonPreset preset)
     : QPushButton(parent),
-      d_ptr(new QtMaterialFlatButtonPrivate(this))
+      d_ptr(new QtMaterialButtonPrivate(this))
 {
-    d_func()->init();
+  d_func()->init();
 
-    applyPreset(preset);
+  applyPreset(preset);
 }
 
-QtMaterialFlatButton::QtMaterialFlatButton(const QString &text, QWidget *parent, Material::ButtonPreset preset)
+QtMaterialButton::QtMaterialButton(const QString& text, QWidget* parent, Material::ButtonPreset preset)
     : QPushButton(text, parent),
-      d_ptr(new QtMaterialFlatButtonPrivate(this))
+      d_ptr(new QtMaterialButtonPrivate(this))
 {
-    d_func()->init();
+  d_func()->init();
 
-    applyPreset(preset);
+  applyPreset(preset);
 }
 
-QtMaterialFlatButton::QtMaterialFlatButton(const QString &text, Material::Role role, QWidget *parent, Material::ButtonPreset preset)
+QtMaterialButton::QtMaterialButton(const QString& text, Material::Role role, QWidget* parent, Material::ButtonPreset preset)
     : QPushButton(text, parent),
-      d_ptr(new QtMaterialFlatButtonPrivate(this))
+      d_ptr(new QtMaterialButtonPrivate(this))
 {
-    d_func()->init();
+  d_func()->init();
 
-    applyPreset(preset);
-    setRole(role);
+  applyPreset(preset);
+  setRole(role);
 }
 
-QtMaterialFlatButton::~QtMaterialFlatButton()
-{
-}
+QtMaterialButton::~QtMaterialButton() = default;
 
-void QtMaterialFlatButton::applyPreset(Material::ButtonPreset preset)
+void QtMaterialButton::applyPreset(Material::ButtonPreset preset)
 {
     switch (preset)
     {
-    case Material::FlatPreset:
+    case Material::NotCheckablePreset:
         setOverlayStyle(Material::NoOverlay);
         break;
     case Material::CheckablePreset:
@@ -124,9 +119,9 @@ void QtMaterialFlatButton::applyPreset(Material::ButtonPreset preset)
     }
 }
 
-void QtMaterialFlatButton::setUseThemeColors(bool value)
+void QtMaterialButton::setUseThemeColors(bool value)
 {
-    Q_D(QtMaterialFlatButton);
+    Q_D(QtMaterialButton);
 
     if (d->useThemeColors == value) {
         return;
@@ -136,31 +131,31 @@ void QtMaterialFlatButton::setUseThemeColors(bool value)
     d->stateMachine->setupProperties();
 }
 
-bool QtMaterialFlatButton::useThemeColors() const
+bool QtMaterialButton::useThemeColors() const
 {
-    Q_D(const QtMaterialFlatButton);
+    Q_D(const QtMaterialButton);
 
     return d->useThemeColors;
 }
 
-void QtMaterialFlatButton::setRole(Material::Role role)
+void QtMaterialButton::setRole(Material::Role role)
 {
-    Q_D(QtMaterialFlatButton);
+    Q_D(QtMaterialButton);
 
     d->role = role;
     d->stateMachine->setupProperties();
 }
 
-Material::Role QtMaterialFlatButton::role() const
+Material::Role QtMaterialButton::role() const
 {
-    Q_D(const QtMaterialFlatButton);
+    Q_D(const QtMaterialButton);
 
     return d->role;
 }
 
-void QtMaterialFlatButton::setForegroundColor(const QColor &color)
+void QtMaterialButton::setForegroundColor(const QColor &color)
 {
-    Q_D(QtMaterialFlatButton);
+    Q_D(QtMaterialButton);
 
     d->foregroundColor = color;
 
@@ -168,9 +163,9 @@ void QtMaterialFlatButton::setForegroundColor(const QColor &color)
     update();
 }
 
-QColor QtMaterialFlatButton::foregroundColor() const
+QColor QtMaterialButton::foregroundColor() const
 {
-    Q_D(const QtMaterialFlatButton);
+    Q_D(const QtMaterialButton);
 
     if (d->useThemeColors || !d->foregroundColor.isValid())
     {
@@ -191,9 +186,9 @@ QColor QtMaterialFlatButton::foregroundColor() const
     return d->foregroundColor;
 }
 
-void QtMaterialFlatButton::setBackgroundColor(const QColor &color)
+void QtMaterialButton::setBackgroundColor(const QColor &color)
 {
-    Q_D(QtMaterialFlatButton);
+    Q_D(QtMaterialButton);
 
     d->backgroundColor = color;
 
@@ -201,9 +196,9 @@ void QtMaterialFlatButton::setBackgroundColor(const QColor &color)
     update();
 }
 
-QColor QtMaterialFlatButton::backgroundColor() const
+QColor QtMaterialButton::backgroundColor() const
 {
-    Q_D(const QtMaterialFlatButton);
+    Q_D(const QtMaterialButton);
 
     if (d->useThemeColors || !d->backgroundColor.isValid())
     {
@@ -221,9 +216,9 @@ QColor QtMaterialFlatButton::backgroundColor() const
     return d->backgroundColor;
 }
 
-void QtMaterialFlatButton::setOverlayColor(const QColor &color)
+void QtMaterialButton::setOverlayColor(const QColor &color)
 {
-    Q_D(QtMaterialFlatButton);
+    Q_D(QtMaterialButton);
 
     d->overlayColor = color;
 
@@ -233,9 +228,9 @@ void QtMaterialFlatButton::setOverlayColor(const QColor &color)
     update();
 }
 
-QColor QtMaterialFlatButton::overlayColor() const
+QColor QtMaterialButton::overlayColor() const
 {
-    Q_D(const QtMaterialFlatButton);
+    Q_D(const QtMaterialButton);
 
     if (d->useThemeColors || !d->overlayColor.isValid()) {
         return foregroundColor();
@@ -243,9 +238,9 @@ QColor QtMaterialFlatButton::overlayColor() const
     return d->overlayColor;
 }
 
-void QtMaterialFlatButton::setDisabledForegroundColor(const QColor &color)
+void QtMaterialButton::setDisabledForegroundColor(const QColor &color)
 {
-    Q_D(QtMaterialFlatButton);
+    Q_D(QtMaterialButton);
 
     d->disabledColor = color;
 
@@ -253,9 +248,9 @@ void QtMaterialFlatButton::setDisabledForegroundColor(const QColor &color)
     update();
 }
 
-QColor QtMaterialFlatButton::disabledForegroundColor() const
+QColor QtMaterialButton::disabledForegroundColor() const
 {
-    Q_D(const QtMaterialFlatButton);
+    Q_D(const QtMaterialButton);
 
     if (d->useThemeColors || !d->disabledColor.isValid()) {
         return QtMaterialStyle::instance().themeColor("disabled");
@@ -264,9 +259,9 @@ QColor QtMaterialFlatButton::disabledForegroundColor() const
     }
 }
 
-void QtMaterialFlatButton::setDisabledBackgroundColor(const QColor &color)
+void QtMaterialButton::setDisabledBackgroundColor(const QColor &color)
 {
-    Q_D(QtMaterialFlatButton);
+    Q_D(QtMaterialButton);
 
     d->disabledBackgroundColor = color;
 
@@ -274,9 +269,9 @@ void QtMaterialFlatButton::setDisabledBackgroundColor(const QColor &color)
     update();
 }
 
-QColor QtMaterialFlatButton::disabledBackgroundColor() const
+QColor QtMaterialButton::disabledBackgroundColor() const
 {
-    Q_D(const QtMaterialFlatButton);
+    Q_D(const QtMaterialButton);
 
     if (d->useThemeColors || !d->disabledBackgroundColor.isValid()) {
         return QtMaterialStyle::instance().themeColor("disabled3");
@@ -285,9 +280,9 @@ QColor QtMaterialFlatButton::disabledBackgroundColor() const
     }
 }
 
-void QtMaterialFlatButton::setFontSize(qreal size)
+void QtMaterialButton::setFontSize(qreal size)
 {
-    Q_D(QtMaterialFlatButton);
+    Q_D(QtMaterialButton);
 
     d->fontSize = size;
 
@@ -298,159 +293,159 @@ void QtMaterialFlatButton::setFontSize(qreal size)
     update();
 }
 
-qreal QtMaterialFlatButton::fontSize() const
+qreal QtMaterialButton::fontSize() const
 {
-    Q_D(const QtMaterialFlatButton);
+    Q_D(const QtMaterialButton);
 
     return d->fontSize;
 }
 
-void QtMaterialFlatButton::setHaloVisible(bool visible)
+void QtMaterialButton::setHaloVisible(bool visible)
 {
-    Q_D(QtMaterialFlatButton);
+    Q_D(QtMaterialButton);
 
     d->haloVisible = visible;
     update();
 }
 
-bool QtMaterialFlatButton::isHaloVisible() const
+bool QtMaterialButton::isHaloVisible() const
 {
-    Q_D(const QtMaterialFlatButton);
+    Q_D(const QtMaterialButton);
 
     return d->haloVisible;
 }
 
-void QtMaterialFlatButton::setOverlayStyle(Material::OverlayStyle style)
+void QtMaterialButton::setOverlayStyle(Material::OverlayStyle style)
 {
-    Q_D(QtMaterialFlatButton);
+    Q_D(QtMaterialButton);
 
     d->overlayStyle = style;
     update();
 }
 
-Material::OverlayStyle QtMaterialFlatButton::overlayStyle() const
+Material::OverlayStyle QtMaterialButton::overlayStyle() const
 {
-    Q_D(const QtMaterialFlatButton);
+    Q_D(const QtMaterialButton);
 
     return d->overlayStyle;
 }
 
-void QtMaterialFlatButton::setRippleStyle(Material::RippleStyle style)
+void QtMaterialButton::setRippleStyle(Material::RippleStyle style)
 {
-    Q_D(QtMaterialFlatButton);
+    Q_D(QtMaterialButton);
 
     d->rippleStyle = style;
 }
 
-Material::RippleStyle QtMaterialFlatButton::rippleStyle() const
+Material::RippleStyle QtMaterialButton::rippleStyle() const
 {
-    Q_D(const QtMaterialFlatButton);
+    Q_D(const QtMaterialButton);
 
     return d->rippleStyle;
 }
 
-void QtMaterialFlatButton::setIconPlacement(Material::ButtonIconPlacement placement)
+void QtMaterialButton::setIconPlacement(Material::ButtonIconPlacement placement)
 {
-    Q_D(QtMaterialFlatButton);
+    Q_D(QtMaterialButton);
 
     d->iconPlacement = placement;
     update();
 }
 
-Material::ButtonIconPlacement QtMaterialFlatButton::iconPlacement() const
+Material::ButtonIconPlacement QtMaterialButton::iconPlacement() const
 {
-    Q_D(const QtMaterialFlatButton);
+    Q_D(const QtMaterialButton);
 
     return d->iconPlacement;
 }
 
-void QtMaterialFlatButton::setCornerRadius(qreal radius)
+void QtMaterialButton::setCornerRadius(qreal radius)
 {
-    Q_D(QtMaterialFlatButton);
+    Q_D(QtMaterialButton);
 
     d->cornerRadius = radius;
     updateClipPath();
     update();
 }
 
-qreal QtMaterialFlatButton::cornerRadius() const
+qreal QtMaterialButton::cornerRadius() const
 {
-    Q_D(const QtMaterialFlatButton);
+    Q_D(const QtMaterialButton);
 
     return d->cornerRadius;
 }
 
-void QtMaterialFlatButton::setBackgroundMode(Qt::BGMode mode)
+void QtMaterialButton::setBackgroundMode(Qt::BGMode mode)
 {
-    Q_D(QtMaterialFlatButton);
+    Q_D(QtMaterialButton);
 
     d->bgMode = mode;
     d->stateMachine->setupProperties();
 }
 
-Qt::BGMode QtMaterialFlatButton::backgroundMode() const
+Qt::BGMode QtMaterialButton::backgroundMode() const
 {
-    Q_D(const QtMaterialFlatButton);
+    Q_D(const QtMaterialButton);
 
     return d->bgMode;
 }
 
-void QtMaterialFlatButton::setBaseOpacity(qreal opacity)
+void QtMaterialButton::setBaseOpacity(qreal opacity)
 {
-    Q_D(QtMaterialFlatButton);
+    Q_D(QtMaterialButton);
 
     d->baseOpacity = opacity;
     d->stateMachine->setupProperties();
 }
 
-qreal QtMaterialFlatButton::baseOpacity() const
+qreal QtMaterialButton::baseOpacity() const
 {
-    Q_D(const QtMaterialFlatButton);
+    Q_D(const QtMaterialButton);
 
     return d->baseOpacity;
 }
 
-void QtMaterialFlatButton::setCheckable(bool value)
+void QtMaterialButton::setCheckable(bool value)
 {
-    Q_D(QtMaterialFlatButton);
+    Q_D(QtMaterialButton);
 
     d->stateMachine->updateCheckedStatus();
 
     QPushButton::setCheckable(value);
 }
 
-void QtMaterialFlatButton::setHasFixedRippleRadius(bool value)
+void QtMaterialButton::setHasFixedRippleRadius(bool value)
 {
-    Q_D(QtMaterialFlatButton);
+    Q_D(QtMaterialButton);
 
     d->useFixedRippleRadius = value;
 }
 
-bool QtMaterialFlatButton::hasFixedRippleRadius() const
+bool QtMaterialButton::hasFixedRippleRadius() const
 {
-    Q_D(const QtMaterialFlatButton);
+    Q_D(const QtMaterialButton);
 
     return d->useFixedRippleRadius;
 }
 
-void QtMaterialFlatButton::setFixedRippleRadius(qreal radius)
+void QtMaterialButton::setFixedRippleRadius(qreal radius)
 {
-    Q_D(QtMaterialFlatButton);
+    Q_D(QtMaterialButton);
 
     d->fixedRippleRadius = radius;
     setHasFixedRippleRadius(true);
 }
 
-void QtMaterialFlatButton::setTextAlignment(Qt::Alignment alignment)
+void QtMaterialButton::setTextAlignment(Qt::Alignment alignment)
 {
-    Q_D(QtMaterialFlatButton);
+    Q_D(QtMaterialButton);
 
     d->textAlignment = alignment;
 }
 
-Qt::Alignment QtMaterialFlatButton::textAlignment() const
+Qt::Alignment QtMaterialButton::textAlignment() const
 {
-    Q_D(const QtMaterialFlatButton);
+    Q_D(const QtMaterialButton);
 
     return d->textAlignment;
 }
@@ -458,7 +453,7 @@ Qt::Alignment QtMaterialFlatButton::textAlignment() const
 /*!
  *  \reimp
  */
-QSize QtMaterialFlatButton::sizeHint() const
+QSize QtMaterialButton::sizeHint() const
 {
     ensurePolished();
 
@@ -467,13 +462,13 @@ QSize QtMaterialFlatButton::sizeHint() const
     int w = 20 + label.width();
     int h = label.height();
     if (!icon().isNull()) {
-        w += iconSize().width() + QtMaterialFlatButton::IconPadding;
+        w += iconSize().width() + QtMaterialButton::IconPadding;
         h = qMax(h, iconSize().height());
     }
     return QSize(w, 20 + h);
 }
 
-QtMaterialFlatButton::QtMaterialFlatButton(QtMaterialFlatButtonPrivate &d,QWidget *parent, Material::ButtonPreset preset)
+QtMaterialButton::QtMaterialButton(QtMaterialButtonPrivate &d, QWidget *parent, Material::ButtonPreset preset)
     : QPushButton(parent),
       d_ptr(&d)
 {
@@ -485,9 +480,9 @@ QtMaterialFlatButton::QtMaterialFlatButton(QtMaterialFlatButtonPrivate &d,QWidge
 /*!
  *  \reimp
  */
-void QtMaterialFlatButton::checkStateSet()
+void QtMaterialButton::checkStateSet()
 {
-    Q_D(QtMaterialFlatButton);
+    Q_D(QtMaterialButton);
 
     d->stateMachine->updateCheckedStatus();
 
@@ -497,9 +492,9 @@ void QtMaterialFlatButton::checkStateSet()
 /*!
  *  \reimp
  */
-void QtMaterialFlatButton::mousePressEvent(QMouseEvent *event)
+void QtMaterialButton::mousePressEvent(QMouseEvent *event)
 {
-    Q_D(QtMaterialFlatButton);
+    Q_D(QtMaterialButton);
 
     if (Material::NoRipple != d->rippleStyle)
     {
@@ -515,7 +510,7 @@ void QtMaterialFlatButton::mousePressEvent(QMouseEvent *event)
         if (d->useFixedRippleRadius) {
             radiusEndValue = d->fixedRippleRadius;
         } else {
-            radiusEndValue = static_cast<qreal>(width())/2;
+            radiusEndValue = static_cast<qreal>(2*qMax(pos.rx(), qAbs(pos.rx()-width())));
         }
 
         QtMaterialRipple *ripple = new QtMaterialRipple(pos);
@@ -524,7 +519,7 @@ void QtMaterialFlatButton::mousePressEvent(QMouseEvent *event)
         ripple->setOpacityStartValue(0.35);
         ripple->setColor(foregroundColor());
         ripple->radiusAnimation()->setDuration(600);
-        ripple->opacityAnimation()->setDuration(1300);
+        ripple->opacityAnimation()->setDuration(600);
 
         d->rippleOverlay->addRipple(ripple);
     }
@@ -535,16 +530,19 @@ void QtMaterialFlatButton::mousePressEvent(QMouseEvent *event)
 /*!
  *  \reimp
  */
-void QtMaterialFlatButton::mouseReleaseEvent(QMouseEvent *event)
+void QtMaterialButton::mouseReleaseEvent(QMouseEvent *event)
 {
-    Q_D(QtMaterialFlatButton);
+    Q_D(QtMaterialButton);
 
     QPushButton::mouseReleaseEvent(event);
 
     d->stateMachine->updateCheckedStatus();
 }
 
-void QtMaterialFlatButton::resizeEvent(QResizeEvent *event)
+/*!
+ *  \reimp
+ */
+void QtMaterialButton::resizeEvent(QResizeEvent *event)
 {
     QPushButton::resizeEvent(event);
 
@@ -554,11 +552,11 @@ void QtMaterialFlatButton::resizeEvent(QResizeEvent *event)
 /*!
  *  \reimp
  */
-void QtMaterialFlatButton::paintEvent(QPaintEvent *event)
+void QtMaterialButton::paintEvent(QPaintEvent *event)
 {
     Q_UNUSED(event)
 
-    Q_D(QtMaterialFlatButton);
+    Q_D(QtMaterialButton);
 
     QPainter painter(this);
     painter.setRenderHint(QPainter::Antialiasing);
@@ -586,9 +584,9 @@ void QtMaterialFlatButton::paintEvent(QPaintEvent *event)
 /*!
  *  \internal
  */
-void QtMaterialFlatButton::paintBackground(QPainter *painter)
+void QtMaterialButton::paintBackground(QPainter *painter)
 {
-    Q_D(QtMaterialFlatButton);
+    Q_D(QtMaterialButton);
 
     const qreal overlayOpacity = d->stateMachine->overlayOpacity();
     const qreal checkedProgress = d->stateMachine->checkedOverlayProgress();
@@ -640,9 +638,9 @@ void QtMaterialFlatButton::paintBackground(QPainter *painter)
 /*!
  *  \internal
  */
-void QtMaterialFlatButton::paintHalo(QPainter *painter)
+void QtMaterialButton::paintHalo(QPainter *painter)
 {
-    Q_D(QtMaterialFlatButton);
+    Q_D(QtMaterialButton);
 
     if (!d->haloVisible) {
         return;
@@ -669,9 +667,9 @@ void QtMaterialFlatButton::paintHalo(QPainter *painter)
 /*!
  *  \internal
  */
-void QtMaterialFlatButton::paintForeground(QPainter *painter)
+void QtMaterialButton::paintForeground(QPainter *painter)
 {
-    Q_D(QtMaterialFlatButton);
+    Q_D(QtMaterialButton);
 
     if (isEnabled()) {
         painter->setPen(foregroundColor());
@@ -729,13 +727,23 @@ void QtMaterialFlatButton::paintForeground(QPainter *painter)
 /*!
  *  \internal
  */
-void QtMaterialFlatButton::updateClipPath()
+void QtMaterialButton::updateClipPath()
 {
-    Q_D(QtMaterialFlatButton);
+    Q_D(QtMaterialButton);
 
     const qreal radius = d->cornerRadius;
 
     QPainterPath path;
     path.addRoundedRect(rect(), radius, radius);
     d->rippleOverlay->setClipPath(path);
+}
+
+void QtMaterialButton::enterEvent(QEvent*)
+{
+  QApplication::setOverrideCursor(Qt::PointingHandCursor);
+}
+
+void QtMaterialButton::leaveEvent(QEvent*)
+{
+  QApplication::restoreOverrideCursor();
 }

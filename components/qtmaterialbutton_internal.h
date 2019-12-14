@@ -1,13 +1,13 @@
-#ifndef QTMATERIALFLATBUTTON_INTERNAL_H
-#define QTMATERIALFLATBUTTON_INTERNAL_H
+#ifndef QTMATERIALTEXTBUTTON_INTERNAL_H
+#define QTMATERIALTEXTBUTTON_INTERNAL_H
 
 #include <QStateMachine>
 #include <QColor>
 
-class QtMaterialFlatButton;
+class QtMaterialButton;
 class QSequentialAnimationGroup;
 
-class QtMaterialFlatButtonStateMachine : public QStateMachine
+class QtMaterialButtonStateMachine : public QStateMachine
 {
     Q_OBJECT
 
@@ -18,8 +18,8 @@ class QtMaterialFlatButtonStateMachine : public QStateMachine
     Q_PROPERTY(qreal haloScaleFactor WRITE setHaloScaleFactor READ haloScaleFactor)
 
 public:
-    explicit QtMaterialFlatButtonStateMachine(QtMaterialFlatButton *parent);
-    ~QtMaterialFlatButtonStateMachine();
+    explicit QtMaterialButtonStateMachine(QtMaterialButton *parent);
+    ~QtMaterialButtonStateMachine() Q_DECL_OVERRIDE;
 
     void setOverlayOpacity(qreal opacity);
     inline qreal overlayOpacity() const;
@@ -49,12 +49,12 @@ protected:
     bool eventFilter(QObject *watched, QEvent *event) Q_DECL_OVERRIDE;
 
 private:
-    Q_DISABLE_COPY(QtMaterialFlatButtonStateMachine)
+    Q_DISABLE_COPY(QtMaterialButtonStateMachine)
 
     void addTransition(QObject *object, QEvent::Type eventType, QState *fromState, QState *toState);
     void addTransition(QAbstractTransition *transition, QState *fromState, QState *toState);
 
-    QtMaterialFlatButton *const m_button;
+    QtMaterialButton     *const m_button;
     QState               *const m_topLevelState;
     QState               *const m_configState;
     QState               *const m_checkableState;
@@ -65,8 +65,6 @@ private:
     QState               *const m_hoveredState;
     QState               *const m_hoveredFocusedState;
     QState               *const m_pressedState;
-    QSequentialAnimationGroup
-                         *const m_haloAnimation;
     qreal                       m_overlayOpacity;
     qreal                       m_checkedOverlayProgress;
     qreal                       m_haloOpacity;
@@ -75,30 +73,29 @@ private:
     bool                        m_wasChecked;
 };
 
-inline qreal QtMaterialFlatButtonStateMachine::overlayOpacity() const
+inline qreal QtMaterialButtonStateMachine::overlayOpacity() const
 {
     return m_overlayOpacity;
 }
 
-inline qreal QtMaterialFlatButtonStateMachine::checkedOverlayProgress() const
+inline qreal QtMaterialButtonStateMachine::checkedOverlayProgress() const
 {
     return m_checkedOverlayProgress;
 }
 
-inline qreal QtMaterialFlatButtonStateMachine::haloOpacity() const
+inline qreal QtMaterialButtonStateMachine::haloOpacity() const
 {
     return m_haloOpacity;
 }
 
-inline qreal QtMaterialFlatButtonStateMachine::haloSize() const
+inline qreal QtMaterialButtonStateMachine::haloSize() const
 {
     return m_haloSize;
 }
 
-inline qreal QtMaterialFlatButtonStateMachine::haloScaleFactor() const
+inline qreal QtMaterialButtonStateMachine::haloScaleFactor() const
 {
     return m_haloScaleFactor;
 }
 
-#endif // QTMATERIALFLATBUTTON_INTERNAL_H
-
+#endif // QTMATERIALTEXTBUTTON_INTERNAL_H

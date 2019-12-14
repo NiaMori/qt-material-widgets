@@ -2,7 +2,7 @@
 #define QTMATERIALTOOLTABS_INTERNAL_H
 
 #include "lib/qtmaterialoverlaywidget.h"
-#include "qtmaterialflatbutton.h"
+#include "qtmaterialbutton.h"
 #include <QtWidgets/QHBoxLayout>
 #include "lib/qtmaterialstyle.h"
 
@@ -20,7 +20,7 @@ public:
     inline void setActive(bool state);
     inline bool isActive() const;
 
-	QtMaterialFlatButton* button();
+    QtMaterialButton* button();
 	QWidget* content();
 
     QSize sizeHint() const Q_DECL_OVERRIDE;
@@ -39,7 +39,7 @@ private:
 
 	QVBoxLayout          *m_tabLayout;
     //QtMaterialToolTabs *const m_tabs;
-	QtMaterialFlatButton *m_tabButton;
+    QtMaterialButton *m_tabButton;
 	QWidget *m_tabContent;
     bool                  m_active;
 	int titleHeight = 30;

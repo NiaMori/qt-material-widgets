@@ -7,7 +7,7 @@
 #include <QPainter>
 #include <QDebug>
 #include "qtmaterialautocomplete_internal.h"
-#include "qtmaterialflatbutton.h"
+#include "qtmaterialtextbutton.h"
 
 /*!
  *  \class QtMaterialAutoCompletePrivate
@@ -111,7 +111,7 @@ void QtMaterialAutoComplete::updateResults(QString text)
 
     if (diff > 0) {
         for (int c = 0; c < diff; c++) {
-            QtMaterialFlatButton *item = new QtMaterialFlatButton;
+            QtMaterialTextButton *item = new QtMaterialTextButton;
             item->setFont(font);
             item->setTextAlignment(Qt::AlignLeft);
             item->setCornerRadius(0);
@@ -136,8 +136,8 @@ void QtMaterialAutoComplete::updateResults(QString text)
 
     for (int i = 0; i < results.count(); ++i) {
         QWidget *widget = d->menuLayout->itemAt(i)->widget();
-        QtMaterialFlatButton *item;
-        if ((item = static_cast<QtMaterialFlatButton *>(widget))) {
+        QtMaterialTextButton *item;
+        if ((item = static_cast<QtMaterialTextButton *>(widget))) {
             QString text = results.at(i);
             QRect rect = fm->boundingRect(text);
             d->maxWidth = qMax(d->maxWidth, rect.width());
@@ -226,8 +226,8 @@ bool QtMaterialAutoComplete::eventFilter(QObject *watched, QEvent *event)
         {
         case QEvent::MouseButtonPress: {
             emit d->stateMachine->shouldFade();
-            QtMaterialFlatButton *widget;
-            if ((widget = static_cast<QtMaterialFlatButton *>(watched))) {
+            QtMaterialTextButton *widget;
+            if ((widget = static_cast<QtMaterialTextButton *>(watched))) {
                 QString text(widget->text());
                 setText(text);
                 emit itemSelected(text);

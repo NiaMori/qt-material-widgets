@@ -9,10 +9,10 @@ enum QtMaterialStateTransitionType {
     SnackbarHideTransition,
     SnackbarWaitTransition,
     SnackbarNextTransition,
-    // FlatButton
-    FlatButtonPressedTransition,
-    FlatButtonCheckedTransition,
-    FlatButtonUncheckedTransition,
+    // TextButton
+    TextButtonPressedTransition,
+    TextButtonCheckedTransition,
+    TextButtonUncheckedTransition,
     // CollapsibleMenu
     CollapsibleMenuExpand,
     CollapsibleMenuCollapse,

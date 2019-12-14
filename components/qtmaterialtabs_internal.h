@@ -2,7 +2,7 @@
 #define QTMATERIALTABS_INTERNAL_H
 
 #include "lib/qtmaterialoverlaywidget.h"
-#include "qtmaterialflatbutton.h"
+#include "qtmaterialtextbutton.h"
 
 class QPropertyAnimation;
 class QtMaterialTabs;
@@ -48,7 +48,7 @@ inline qreal QtMaterialTabsInkBar::tweenValue() const
     return m_tween;
 }
 
-class QtMaterialTab : public QtMaterialFlatButton
+class QtMaterialTab : public QtMaterialTextButton
 {
     Q_OBJECT
 

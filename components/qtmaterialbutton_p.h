@@ -1,28 +1,28 @@
-#ifndef QTMATERIALFLATBUTTON_P_H
-#define QTMATERIALFLATBUTTON_P_H
+#ifndef QTMATERIALBUTTON_P_H
+#define QTMATERIALBUTTON_P_H
 
-#include <QtGlobal>
 #include <QColor>
+
 #include "lib/qtmaterialtheme.h"
 
-class QtMaterialFlatButton;
+class QtMaterialButton;
 class QtMaterialRippleOverlay;
-class QtMaterialFlatButtonStateMachine;
+class QtMaterialButtonStateMachine;
 
-class QtMaterialFlatButtonPrivate
+class QtMaterialButtonPrivate
 {
-    Q_DISABLE_COPY(QtMaterialFlatButtonPrivate)
-    Q_DECLARE_PUBLIC(QtMaterialFlatButton)
+  Q_DISABLE_COPY(QtMaterialButtonPrivate)
+  Q_DECLARE_PUBLIC(QtMaterialButton)
 
 public:
-    QtMaterialFlatButtonPrivate(QtMaterialFlatButton *q);
-    virtual ~QtMaterialFlatButtonPrivate();
+    QtMaterialButtonPrivate(QtMaterialButton *q);
+    virtual ~QtMaterialButtonPrivate();
 
     void init();
 
-    QtMaterialFlatButton             *const q_ptr;
+    QtMaterialButton                 *const q_ptr;
     QtMaterialRippleOverlay          *rippleOverlay;
-    QtMaterialFlatButtonStateMachine *stateMachine;
+    QtMaterialButtonStateMachine     *stateMachine;
     Material::Role                    role;
     Material::RippleStyle             rippleStyle;
     Material::ButtonIconPlacement     iconPlacement;
@@ -43,4 +43,4 @@ public:
     bool                              haloVisible;
 };
 
-#endif // QTMATERIALFLATBUTTON_P_H
+#endif // QTMATERIALBUTTON_P_H

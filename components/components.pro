@@ -8,15 +8,17 @@ SOURCES = \
     lib/qtmaterialtheme.cpp \
     qtmaterialbadge.cpp \
     lib/qtmaterialoverlaywidget.cpp \
+    qtmaterialbutton.cpp \
     qtmaterialcheckbox.cpp \
     lib/qtmaterialcheckable_internal.cpp \
     lib/qtmaterialcheckable.cpp \
     lib/qtmaterialripple.cpp \
     lib/qtmaterialrippleoverlay.cpp \
     qtmaterialfab.cpp \
-    qtmaterialraisedbutton.cpp \
-    qtmaterialflatbutton_internal.cpp \
-    qtmaterialflatbutton.cpp \
+    qtmaterialcontainedbutton.cpp \
+    qtmaterialoutlinedbutton.cpp \
+    qtmaterialbutton_internal.cpp \
+    qtmaterialtextbutton.cpp \
     lib/qtmaterialstatetransition.cpp \
     qtmaterialiconbutton.cpp \
     qtmaterialprogress_internal.cpp \
@@ -66,6 +68,8 @@ HEADERS = \
     qtmaterialbadge_p.h \
     qtmaterialbadge.h \
     lib/qtmaterialoverlaywidget.h \
+    qtmaterialbutton.h \
+    qtmaterialbutton_p.h \
     qtmaterialcheckbox_p.h \
     qtmaterialcheckbox.h \
     lib/qtmaterialcheckable_internal.h \
@@ -75,11 +79,13 @@ HEADERS = \
     lib/qtmaterialcheckable.h \
     qtmaterialfab_p.h \
     qtmaterialfab.h \
-    qtmaterialraisedbutton_p.h \
-    qtmaterialraisedbutton.h \
-    qtmaterialflatbutton_internal.h \
-    qtmaterialflatbutton_p.h \
-    qtmaterialflatbutton.h \
+    qtmaterialcontainedbutton_p.h \
+    qtmaterialcontainedbutton.h \
+    qtmaterialoutlinedbutton.h \
+    qtmaterialoutlinedbutton_p.h \
+    qtmaterialbutton_internal.h \
+    qtmaterialtextbutton_p.h \
+    qtmaterialtextbutton.h \
     lib/qtmaterialstatetransition.h \
     lib/qtmaterialstatetransitionevent.h \
     qtmaterialiconbutton_p.h \

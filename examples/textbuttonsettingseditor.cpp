@@ -1,30 +1,30 @@
-#include "flatbuttonsettingseditor.h"
+#include "textbuttonsettingseditor.h"
 #include <QColorDialog>
 #include <QDebug>
-#include <qtmaterialflatbutton.h>
+#include <qtmaterialbutton.h>
 
-FlatButtonSettingsEditor::FlatButtonSettingsEditor(QWidget *parent)
+TextButtonSettingsEditor::TextButtonSettingsEditor(QWidget *parent)
     : QWidget(parent),
-      ui(new Ui::FlatButtonSettingsForm),
-      m_button(new QtMaterialFlatButton("I'm flat"))
+      ui(new Ui::TextButtonSettingsForm),
+      m_button(new QtMaterialButton("text button"))
 {
     init();
 }
 
-FlatButtonSettingsEditor::~FlatButtonSettingsEditor()
+TextButtonSettingsEditor::~TextButtonSettingsEditor()
 {
     delete ui;
 }
 
-FlatButtonSettingsEditor::FlatButtonSettingsEditor(QtMaterialFlatButton *button, QWidget *parent)
+TextButtonSettingsEditor::TextButtonSettingsEditor(QtMaterialButton *button, QWidget *parent)
     : QWidget(parent),
-      ui(new Ui::FlatButtonSettingsForm),
+      ui(new Ui::TextButtonSettingsForm),
       m_button(button)
 {
     init();
 }
 
-void FlatButtonSettingsEditor::setupForm()
+void TextButtonSettingsEditor::setupForm()
 {
     switch (m_button->role())
     {
@@ -106,7 +106,7 @@ void FlatButtonSettingsEditor::setupForm()
     ui->buttonTextLineEdit->setText(m_button->text());
 }
 
-void FlatButtonSettingsEditor::updateWidget()
+void TextButtonSettingsEditor::updateWidget()
 {
     switch (ui->buttonRoleComboBox->currentIndex())
     {
@@ -194,7 +194,7 @@ void FlatButtonSettingsEditor::updateWidget()
     ui->checkedCheckBox->setEnabled(m_button->isCheckable());
 }
 
-void FlatButtonSettingsEditor::selectColor()
+void TextButtonSettingsEditor::selectColor()
 {
     QColorDialog dialog;
     if (dialog.exec()) {
@@ -220,7 +220,7 @@ void FlatButtonSettingsEditor::selectColor()
     setupForm();
 }
 
-void FlatButtonSettingsEditor::applyDefaultPreset()
+void TextButtonSettingsEditor::applyDefaultPreset()
 {
     ui->buttonRoleComboBox->setCurrentIndex(0);
     ui->rippleStyleComboBox->setCurrentIndex(1);
@@ -236,10 +236,10 @@ void FlatButtonSettingsEditor::applyDefaultPreset()
     ui->checkableCheckBox->setChecked(false);
     ui->disabledCheckBox->setChecked(false);
     updateWidget();
-    m_button->applyPreset(Material::FlatPreset);
+    m_button->applyPreset(Material::NotCheckablePreset);
 }
 
-void FlatButtonSettingsEditor::applyCheckablePreset()
+void TextButtonSettingsEditor::applyCheckablePreset()
 {
     ui->buttonRoleComboBox->setCurrentIndex(0);
     ui->rippleStyleComboBox->setCurrentIndex(1);
@@ -258,7 +258,7 @@ void FlatButtonSettingsEditor::applyCheckablePreset()
     m_button->applyPreset(Material::CheckablePreset);
 }
 
-void FlatButtonSettingsEditor::init()
+void TextButtonSettingsEditor::init()
 {
     QVBoxLayout *layout = new QVBoxLayout;
     setLayout(layout);

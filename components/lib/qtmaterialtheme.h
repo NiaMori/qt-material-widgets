@@ -9,7 +9,7 @@
 namespace Material
 {
     enum ButtonPreset {
-        FlatPreset,
+        NotCheckablePreset,
         CheckablePreset
     };
 

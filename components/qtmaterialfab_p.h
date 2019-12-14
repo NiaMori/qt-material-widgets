@@ -1,11 +1,11 @@
 #ifndef QTMATERIALFAB_P_H
 #define QTMATERIALFAB_P_H
 
-#include "qtmaterialraisedbutton_p.h"
+#include "qtmaterialcontainedbutton_p.h"
 
 class QtMaterialFloatingActionButton;
 
-class QtMaterialFloatingActionButtonPrivate : public QtMaterialRaisedButtonPrivate
+class QtMaterialFloatingActionButtonPrivate : public QtMaterialContainedButtonPrivate
 {
     Q_DISABLE_COPY(QtMaterialFloatingActionButtonPrivate)
     Q_DECLARE_PUBLIC(QtMaterialFloatingActionButton)

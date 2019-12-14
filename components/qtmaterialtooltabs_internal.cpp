@@ -14,7 +14,7 @@ QtMaterialToolTab::QtMaterialToolTab(const QString &text)
 {
    // Q_ASSERT(parent);
 	m_tabLayout = new QVBoxLayout(this);
-	m_tabButton = new QtMaterialFlatButton(this);
+    m_tabButton = new QtMaterialButton(this);
 	m_tabContent = new QWidget(this);
 
 	m_tabLayout->addWidget(m_tabButton);
@@ -119,7 +119,7 @@ void QtMaterialToolTab::paintForeground(QPainter *painter)
     }
 }
 
-QtMaterialFlatButton* QtMaterialToolTab::button()
+QtMaterialButton* QtMaterialToolTab::button()
 {
 	return m_tabButton;
 }

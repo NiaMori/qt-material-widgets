@@ -99,7 +99,7 @@ void QtMaterialTabsInkBar::paintEvent(QPaintEvent *event)
  */
 
 QtMaterialTab::QtMaterialTab(QtMaterialTabs *parent)
-    : QtMaterialFlatButton(parent),
+    : QtMaterialTextButton(parent),
       m_tabs(parent),
       m_active(false)
 {
@@ -126,7 +126,7 @@ QtMaterialTab::~QtMaterialTab()
 QSize QtMaterialTab::sizeHint() const
 {
     if (icon().isNull()) {
-        return QtMaterialFlatButton::sizeHint();
+        return QtMaterialTextButton::sizeHint();
     } else {
         return QSize(40, iconSize().height()+46);
     }

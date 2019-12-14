@@ -1,11 +1,11 @@
 #ifndef QTMATERIALFAB_H
 #define QTMATERIALFAB_H
 
-#include "qtmaterialraisedbutton.h"
+#include "qtmaterialcontainedbutton.h"
 
 class QtMaterialFloatingActionButtonPrivate;
 
-class QtMaterialFloatingActionButton : public QtMaterialRaisedButton
+class QtMaterialFloatingActionButton : public QtMaterialContainedButton
 {
     Q_OBJECT
 
