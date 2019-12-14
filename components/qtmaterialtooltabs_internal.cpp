@@ -9,62 +9,42 @@
 #include "qtmaterialscrollbar.h"
 #include <QtWidgets/QAbstractScrollArea>
 
+QtMaterialToolTab::QtMaterialToolTab(const QString &text)
+      :m_active(false)
 {
-    Q_ASSERT(parent);
-/*!
- *  \class QtMaterialToolTab
- *  \internal
- */
-
-QtMaterialToolTab::QtMaterialToolTab(QtMaterialToolTabs *parent)
-	 :m_tabs(parent),
-      m_active(false)
-{
-    Q_ASSERT(parent);
-
+   // Q_ASSERT(parent);
 	m_tabLayout = new QVBoxLayout(this);
 	m_tabButton = new QtMaterialFlatButton(this);
 	m_tabContent = new QWidget(this);
-	//m_tabContent = new QtMaterialScrollBar(this);
 
-	m_tabButton->setFixedHeight(40);
+	m_tabLayout->addWidget(m_tabButton);
+	m_tabLayout->addWidget(m_tabContent);
+	m_tabLayout->setStretchFactor(m_tabButton, 0);
+	m_tabLayout->setStretchFactor(m_tabContent, 1);
+	m_tabLayout->setContentsMargins(0, 0, 0, 0);
+	m_tabLayout->setSpacing(0);
+    m_tabLayout->setMargin(0);
+
     QFont f(font());
     f.setStyleName("Normal");
     m_tabButton->setFont(f);
+	m_tabButton->setText(text);
 
     m_tabButton->setCornerRadius(0);
     m_tabButton->setRole(Material::Primary);
     m_tabButton->setBackgroundMode(Qt::OpaqueMode);
     m_tabButton->setBaseOpacity(0.25);
 
-	m_tabButton->setSizePolicy(QSizePolicy ::Expanding , QSizePolicy ::Fixed );
-	m_tabButton->setStyleSheet("border: 3px solid red");
+	setTitleHeight(titleHeight);
 
-	//m_tabContent->setFixedHeight(0);
+	m_tabContent->setFixedHeight(0);
 
-	m_tabContent->setStyleSheet("background: blue;");
-	m_tabContent->resize(200, 0);
-	m_tabContent->setSizePolicy(QSizePolicy ::Expanding , QSizePolicy ::Fixed );
-/*
-	QVBoxLayout *layout = new QVBoxLayout(m_tabContent);
-    m_tabContent->setLayout(layout);
-	QAbstractScrollArea *scrollArea = new QAbstractScrollArea(m_tabContent);
-	layout->addWidget(scrollArea);
-	//m_tabContent->setStyleSheet("border: 8px solid green");
-*/
+	QColor col = m_tabButton->backgroundColor().darker(120);
+	QString str = " background-color : " +col.name();
+	m_tabContent->setStyleSheet(str);
+	
+	setSizePolicy(QSizePolicy ::Expanding , QSizePolicy ::Expanding );
 
-	//m_tabContent->setStyleSheet("background-color:black;");
-	//m_tabContent->setBackgroundMode(Qt::OpaqueMode);
-    //m_tabContent->setBaseOpacity(0.25);
-
-	m_tabLayout->addWidget(m_tabButton);
-	m_tabLayout->addWidget(m_tabContent);
-	m_tabLayout->setContentsMargins(0, 0, 0, 0);
-	m_tabLayout->setSpacing(0);
-    m_tabLayout->setMargin(0);
-	m_tabLayout->setStretch(0, 0);
-	m_tabLayout->setStretch(1, 0);
-	//m_tabLayout->setAlignment(Qt::AlignTop);
 
     connect(m_tabButton, SIGNAL(clicked(bool)), this, SLOT(activateTab()));
 }
@@ -73,18 +53,30 @@ QtMaterialToolTab::~QtMaterialToolTab()
 {
 }
 
+void QtMaterialToolTab::setTitleHeight(int height)
+{
+	m_tabButton->setFixedHeight(height);
+	titleHeight = height;
+	updateGeometry();
+}
+
 QSize QtMaterialToolTab::sizeHint() const
 {
-    if (m_tabButton->icon().isNull()) {
-        return m_tabButton->sizeHint()+QSize(40,m_tabContent->height());
-    } else {
-        return QSize(40, m_tabButton->iconSize().height()+m_tabContent->height());
-    }
+	if (m_active)
+        return QSize(m_tabButton->sizeHint().width(), titleHeight) + m_tabContent->sizeHint();
+	else
+        return m_tabButton->minimumSize();// QSize(m_tabButton->sizeHint().width(), titleHeight);
 }
+
+QSize QtMaterialToolTab::minimumSizeHint() const
+{
+    return m_tabButton->minimumSize();
+}
+
 
 void QtMaterialToolTab::activateTab()
 {
-    m_tabs->setCurrentTab(this);
+	emit onActivate(this);
 }
 
 void QtMaterialToolTab::paintForeground(QPainter *painter)

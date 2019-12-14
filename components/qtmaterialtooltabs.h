@@ -34,15 +34,19 @@ public:
     void setTextColor(const QColor &color);
     QColor textColor() const;
 
-    void addTab(const QString &text, const QIcon &icon = QIcon());
+    QtMaterialToolTab* addTab(const QString &text, const QIcon &icon = QIcon());
+	QtMaterialToolTab* addTab(QtMaterialToolTab *tab);
 
-    void setCurrentTab(QtMaterialToolTab *tab);
+    //void setCurrentTab(QtMaterialToolTab *tab);
     void setCurrentTab(int index);
+	QtMaterialToolTab* getTab(int index);
 
     int currentIndex() const;
 
 signals:
     void currentChanged(int);
+public slots:
+	void setCurrentTab(QtMaterialToolTab*);
 
 protected:
     void setTabActive(int index, bool active = true);

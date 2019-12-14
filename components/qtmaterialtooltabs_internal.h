@@ -4,6 +4,7 @@
 #include "lib/qtmaterialoverlaywidget.h"
 #include "qtmaterialflatbutton.h"
 #include <QtWidgets/QHBoxLayout>
+#include "lib/qtmaterialstyle.h"
 
 class QPropertyAnimation;
 class QtMaterialToolTabs;
@@ -13,7 +14,7 @@ class QtMaterialToolTab : public QWidget
     Q_OBJECT
 
 public:
-    explicit QtMaterialToolTab(QtMaterialToolTabs *parent);
+    explicit QtMaterialToolTab(const QString &text);
     ~QtMaterialToolTab();
 
     inline void setActive(bool state);
@@ -23,22 +24,25 @@ public:
 	QWidget* content();
 
     QSize sizeHint() const Q_DECL_OVERRIDE;
-
+	QSize minimumSizeHint() const Q_DECL_OVERRIDE;
+	void setTitleHeight(int height);
+signals:
+        void onActivate(QtMaterialToolTab* tooltab);
 protected slots:
     void activateTab();
 
 protected:
-    void paintForeground(QPainter *painter); //Q_DECL_OVERRIDE;
+    void paintForeground(QPainter *painter);// Q_DECL_OVERRIDE;
 
 private:
     Q_DISABLE_COPY(QtMaterialToolTab)
 
 	QVBoxLayout          *m_tabLayout;
-    QtMaterialToolTabs *const m_tabs;
+    //QtMaterialToolTabs *const m_tabs;
 	QtMaterialFlatButton *m_tabButton;
-	//QtMaterialFlatButton *m_tabContent;
 	QWidget *m_tabContent;
     bool                  m_active;
+	int titleHeight = 30;
 };
 
 inline void QtMaterialToolTab::setActive(bool state)
@@ -46,15 +50,11 @@ inline void QtMaterialToolTab::setActive(bool state)
     m_active = state;
 	if (state)
 	{
-		//m_tabContent->setMinimumHeight(300);
-		m_tabContent->setSizePolicy(QSizePolicy ::Expanding , QSizePolicy ::Expanding );
+		m_tabContent->setMaximumHeight(16777215);
 	}
 	else
 	{
-		//m_tabContent->setFixedHeight(0);
-		//m_tabContent->setHeight(0);
-		m_tabContent->resize(200, 0);
-		m_tabContent->setSizePolicy(QSizePolicy ::Expanding , QSizePolicy ::Fixed );
+		m_tabContent->setFixedHeight(0);
 	}
     update();
 }

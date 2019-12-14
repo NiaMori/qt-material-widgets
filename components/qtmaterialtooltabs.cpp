@@ -33,8 +33,7 @@ void QtMaterialToolTabsPrivate::init()
 
     tabLayout->setSpacing(0);
     tabLayout->setMargin(0);
-	tabLayout->setContentsMargins(0, 0, 0, 0);
-	//tabLayout->setAlignment(Qt::AlignTop);
+    tabLayout->setContentsMargins(0, 0, 0, 0);
 }
 
 /*!
@@ -179,30 +178,30 @@ void QtMaterialToolTabs::setCurrentTab(int index)
     emit currentChanged(index);
 }
 
-void QtMaterialToolTabs::addTab(const QString &text, const QIcon &icon)
+QtMaterialToolTab* QtMaterialToolTabs::getTab(int index)
+{
+	Q_D(QtMaterialToolTabs);
+	return static_cast<QtMaterialToolTab *>(d->tabLayout->itemAt(index)->widget());
+}
+
+QtMaterialToolTab* QtMaterialToolTabs::addTab(QtMaterialToolTab *tab)
 {
     Q_D(QtMaterialToolTabs);
 
-    QtMaterialToolTab *tab = new QtMaterialToolTab(this);
-	tab->setSizePolicy(QSizePolicy ::Expanding , QSizePolicy ::Expanding );
-    tab->button()->setText(text);
+	connect(tab, SIGNAL(onActivate(QtMaterialToolTab*)), this, SLOT(setCurrentTab(QtMaterialToolTab*)));
+
     tab->button()->setHaloVisible(isHaloVisible());
     tab->button()->setRippleStyle(rippleStyle());
 
-    if (!icon.isNull()) {
-        tab->button()->setIcon(icon);
-        tab->button()->setIconSize(QSize(22, 22));
-    }
-
 	d->tabLayout->addWidget(tab);
+
+	d->tabLayout->setStretchFactor(tab, 0);
 
     if (-1 == d->tab) {
         d->tab = 0;
-        d->inkBar->refreshGeometry();
-        d->inkBar->raise();
-        tab->setActive(true);
-		d->tabLayout->setStretch(0, 1);
+        setTabActive(0,true);
     }
+	return tab;
 }
 
 int QtMaterialToolTabs::currentIndex() const
@@ -220,7 +219,7 @@ void QtMaterialToolTabs::setTabActive(int index, bool active)
 	QWidget *tabContent;
 
     if (index > -1) {
-        tab = static_cast<QtMaterialToolTab *>(d->tabLayout->itemAt(index)->widget());
+		tab = getTab(index);
         if (tab) {
             tab->setActive(active);
 			if(active)
@@ -229,6 +228,7 @@ void QtMaterialToolTabs::setTabActive(int index, bool active)
 				d->tabLayout->setStretch(index, 0);
         }
     }
+    update();
 }
 
 void QtMaterialToolTabs::updateTabs()
@@ -236,9 +236,9 @@ void QtMaterialToolTabs::updateTabs()
     Q_D(QtMaterialToolTabs);
 
     QtMaterialToolTab *tab;
-    for (int i = 0; i < d->tabLayout->count(); i=i+2) {
-        QLayoutItem *item = d->tabLayout->itemAt(i);
-        if ((tab = static_cast<QtMaterialToolTab *>(item->widget()))) {
+    for (int i = 0; i < d->tabLayout->count(); i++) {
+		tab = getTab(i);
+        if (tab ) {
             tab->button()->setRippleStyle(d->rippleStyle);
             tab->button()->setHaloVisible(d->showHalo);
             tab->button()->setBackgroundColor(backgroundColor());
@@ -246,3 +246,4 @@ void QtMaterialToolTabs::updateTabs()
         }
     }
 }
+
