@@ -1,5 +1,5 @@
-#include "lib/qtmaterialtheme.h"
-#include "lib/qtmaterialtheme_p.h"
+#include "qtmaterialtheme.h"
+#include "qtmaterialtheme_p.h"
 #include <QString>
 #include <QStringBuilder>
 #include <QDebug>
